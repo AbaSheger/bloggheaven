@@ -21,34 +21,36 @@ public class PostController {
         this.postService = postService;
     }
 
+    //client_USER
+
     @GetMapping ("/posts")
-   // @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('client_USER')")
     public List <Post> getAllPosts() {
         return postService.findAll();
     }
 
     @GetMapping ("/posts/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('client_USER')")
     public Optional<Post> getPostById(@PathVariable Long id) {
         return postService.findById(id);
     }
 
     @PostMapping ("/newpost")
-    @PreAuthorize("hasRole('USER')")
-    public String createPost(@RequestBody Post post) {
-        postService.save(post);
+    @PreAuthorize("hasRole('client_USER')")
+    public String createPost(@RequestBody Post post, @RequestParam Long userId) {
+        postService.save(post, userId);
         return "Post created successfully";
     }
 
     @PutMapping ("/updatepost/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('client_USER')")
     public String updatePost(@PathVariable Long id, @RequestBody Post post){
         postService.update(post);
         return "Post updated successfully";
     }
 
     @DeleteMapping ("/deletepost/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('client_USER')")
     public String deletePost(@PathVariable Long id){
         postService.delete(id);
         return "Post deleted successfully";

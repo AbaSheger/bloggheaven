@@ -1,6 +1,7 @@
 package com.example.bloggheaven.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -30,9 +31,12 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "address_id")
+    @JsonIgnoreProperties("users")
     private Address address;
 
-    @OneToMany(mappedBy = "author")
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("author")
     private List<Post> posts;
 
     public User() {
@@ -47,6 +51,13 @@ public class User {
         this.address = address;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -54,22 +65,6 @@ public class User {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
     }
 
     public String getLastName() {
@@ -110,5 +105,13 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

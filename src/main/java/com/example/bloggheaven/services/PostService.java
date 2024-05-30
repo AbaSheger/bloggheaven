@@ -1,7 +1,9 @@
 package com.example.bloggheaven.services;
 
 import com.example.bloggheaven.Repository.PostRepository;
+import com.example.bloggheaven.Repository.UserRepository;
 import com.example.bloggheaven.entity.Post;
+import com.example.bloggheaven.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +12,12 @@ import java.util.Optional;
 @Service
 public class PostService {
 private final PostRepository postRepository;
+public  final UserRepository userRepository;
 
     @Autowired
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository , UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     //get all posts
@@ -28,7 +32,12 @@ private final PostRepository postRepository;
     }
 
     // create post
-    public Post save(Post post) {
+    public Post save(Post post,Long userId ) {
+        //fetch user
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
+        post.setAuthor(user);
+
         return postRepository.save(post);
     }
 

@@ -1,5 +1,6 @@
 package com.example.bloggheaven.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class Address {
     private String country;
 
     @OneToMany (mappedBy = "address")
+    @JsonIgnoreProperties("address")
     private List<User> users;
 
 
@@ -37,6 +39,13 @@ public class Address {
         this.country = country;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getStreet() {
         return street;
@@ -44,14 +53,6 @@ public class Address {
 
     public void setStreet(String street) {
         this.street = street;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getPostalCode() {

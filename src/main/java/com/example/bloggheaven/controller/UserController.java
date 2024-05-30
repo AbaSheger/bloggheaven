@@ -20,20 +20,22 @@ public class UserController {
         this.userService = userService;
     }
 
+    //client_ADMIN
+
     @GetMapping("/users") // admin role
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('client_ADMIN')")
     public List <User> getAllUsers() {
         return userService.findAll();
     }
 
     @GetMapping("/users/{id}") // admin role
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('client_ADMIN')")
     public Optional<User> getUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
     @PostMapping("/newuser")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('client_ADMIN')")
     public String createUser(@RequestBody User user) {
         userService.save(user);
         return "User created successfully";

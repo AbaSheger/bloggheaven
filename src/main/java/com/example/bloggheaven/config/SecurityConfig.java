@@ -39,7 +39,6 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/api/posts").permitAll()  // permit all requests to /api/posts/**
                         .anyRequest().authenticated())  // any request must be authenticated
                 .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer  // configure the resource server
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter))) // configure the jwt authentication converter

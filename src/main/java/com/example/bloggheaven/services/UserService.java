@@ -2,6 +2,7 @@ package com.example.bloggheaven.services;
 
 import com.example.bloggheaven.Repository.AddressRepository;
 import com.example.bloggheaven.Repository.UserRepository;
+import com.example.bloggheaven.entity.Address;
 import com.example.bloggheaven.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,6 +39,7 @@ public class UserService {
 
 
     public User save(User user) {
+
         return userRepository.save(user);
     }
 
@@ -51,7 +53,10 @@ public class UserService {
         userRepository.delete(user);
     }
 
-
+    public User saveWithAddress(User user, Address address) {
+        user.setAddress(address);
+        return userRepository.save(user);
+    }
 
 
 

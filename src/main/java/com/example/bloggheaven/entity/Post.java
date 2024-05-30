@@ -1,5 +1,6 @@
 package com.example.bloggheaven.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,8 +18,12 @@ public class Post {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", nullable = false)
+    @JsonIgnoreProperties ("posts")
+
     private User author;
+
+
 
 
     public Post() {
@@ -30,20 +35,20 @@ public class Post {
         this.author = Author;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getContent() {
