@@ -37,14 +37,15 @@ public class PostController {
 
     @PostMapping ("/newpost")
     @PreAuthorize("hasRole('client_USER')")
-    public String createPost(@RequestBody Post post, @RequestParam Long userId) {
-        postService.save(post, userId);
+    public String createPost(@RequestBody Post post) {
+        postService.save(post);
         return "Post created successfully";
     }
 
     @PutMapping ("/updatepost/{id}")
     @PreAuthorize("hasRole('client_USER')")
     public String updatePost(@PathVariable Long id, @RequestBody Post post){
+        post.setId(id);
         postService.update(post);
         return "Post updated successfully";
     }

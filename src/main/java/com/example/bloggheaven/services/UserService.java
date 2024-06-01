@@ -23,10 +23,12 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository , AddressRepository addressRepository) {
         this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
     }
 
     public List<User> findAll() {
@@ -40,7 +42,20 @@ public class UserService {
 
     public User save(User user) {
 
+        Address address = user.getAddress();
+        if (address != null) {
+            if (address.getId() != null && !addressRepository.existsById(address.getId())) {
+                throw new RuntimeException("Address with id " + address.getId() + " not found");
+            } else if (address.getId() != null) {
+                address = addressRepository.findById(address.getId()).get();
+            } else {
+                address = addressRepository.save(address);
+            }
+            user.setAddress(address);
+        }
+
         return userRepository.save(user);
+
     }
 
 
@@ -52,12 +67,5 @@ public class UserService {
     public void delete(User user) {
         userRepository.delete(user);
     }
-
-    public User saveWithAddress(User user, Address address) {
-        user.setAddress(address);
-        return userRepository.save(user);
-    }
-
-
 
 }

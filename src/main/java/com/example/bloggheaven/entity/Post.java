@@ -17,8 +17,8 @@ public class Post {
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id", nullable = false)
+    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id")
     @JsonIgnoreProperties ("posts")
 
     private User author;

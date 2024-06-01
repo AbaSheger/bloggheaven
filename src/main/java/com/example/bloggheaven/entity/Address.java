@@ -23,7 +23,7 @@ public class Address {
     @Column (name = "country", nullable = false, length = 50)
     private String country;
 
-    @OneToMany (mappedBy = "address")
+    @OneToMany (mappedBy = "address", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("address")
     private List<User> users;
 

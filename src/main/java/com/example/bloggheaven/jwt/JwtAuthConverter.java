@@ -26,7 +26,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
     @Value("${jwt.auth.converter.resource-id}")
     private String resourceID;
 
-    @Value("jwt.auth.converter.principal-attribute)")
+    @Value("${jwt.auth.converter.principal-attribute}")
     private String principalAttribute;
 
 

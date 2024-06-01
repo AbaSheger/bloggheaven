@@ -29,7 +29,7 @@ public class User {
     @Column (name = "member_type", nullable = false, length = 100)
     private String  memberType;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     @JsonIgnoreProperties("users")
     private Address address;
