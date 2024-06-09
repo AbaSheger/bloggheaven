@@ -1,6 +1,5 @@
 package com.example.bloggheaven.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,13 +16,9 @@ public class Post {
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
-    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne (fetch = FetchType.EAGER) // to fetch the author of the post when the post is fetched
     @JoinColumn(name = "author_id")
-    @JsonIgnoreProperties ("posts")
-
     private User author;
-
-
 
 
     public Post() {

@@ -6,7 +6,10 @@ import com.example.bloggheaven.entity.Address;
 import com.example.bloggheaven.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +38,8 @@ public class AddressService {
 
     //get address by id
 
-    public Optional<Address> findById(Long id) {
-        return addressRepository.findById(id);
+    public Address findById(Long id) {
+        return addressRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
     }
 
 
@@ -44,7 +47,7 @@ public class AddressService {
 
     public Address save(Address address, Long userId) {
         //fetch user
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
 
 

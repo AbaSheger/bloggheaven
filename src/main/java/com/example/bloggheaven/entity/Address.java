@@ -1,6 +1,6 @@
 package com.example.bloggheaven.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,8 +23,8 @@ public class Address {
     @Column (name = "country", nullable = false, length = 50)
     private String country;
 
-    @OneToMany (mappedBy = "address", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("address")
+    @OneToMany (mappedBy = "address")
+    @JsonIgnore
     private List<User> users;
 
 

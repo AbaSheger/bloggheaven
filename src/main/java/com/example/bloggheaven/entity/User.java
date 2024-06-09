@@ -1,6 +1,7 @@
 package com.example.bloggheaven.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -29,14 +30,13 @@ public class User {
     @Column (name = "member_type", nullable = false, length = 100)
     private String  memberType;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)  // to fetch the address of the user when the user is fetched
     @JoinColumn(name = "address_id")
-    @JsonIgnoreProperties("users")
     private Address address;
 
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE) // to delete all posts of a user when the user is deleted
+    @JsonIgnore
     private List<Post> posts;
 
     public User() {

@@ -5,19 +5,12 @@ import com.example.bloggheaven.Repository.UserRepository;
 import com.example.bloggheaven.entity.Address;
 import com.example.bloggheaven.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-
-//get all users
-//get user by id
-// create user
-//update user
-//delete user
-
-
 
 @Service
 public class UserService {
@@ -35,34 +28,71 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
-
-    public User save(User user) {
-
+  /*  public User save(User user) {
         Address address = user.getAddress();
-        if (address != null) {
-            if (address.getId() != null && !addressRepository.existsById(address.getId())) {
-                throw new RuntimeException("Address with id " + address.getId() + " not found");
-            } else if (address.getId() != null) {
-                address = addressRepository.findById(address.getId()).get();
+        if (address != null && address.getId() != null){
+            Optional<Address> optionalAddress = addressRepository.findById(address.getId());
+            if (optionalAddress.isPresent()) {
+                address = optionalAddress.get();
             } else {
                 address = addressRepository.save(address);
             }
-            user.setAddress(address);
+
+        } else if (address != null && address.getId() == null) {
+            address = addressRepository.save(address);
+        }
+        user.setAddress(address);
+
+        return userRepository.save(user);
+    } */
+
+    public User save(User user) {
+        Address address = user.getAddress();
+
+        if (address != null) {
+            if (address.getId() != null) {
+                // Check if address exists in the repository
+                Address finalAddress = addressRepository.findById(address.getId())
+                        .orElseGet(() -> addressRepository.save(address));
+                user.setAddress(finalAddress);
+            } else {
+                // Save the new address
+                Address savedAddress = addressRepository.save(address);
+                user.setAddress(savedAddress);
+            }
+
         }
 
         return userRepository.save(user);
-
     }
+
+
+  /*  public User save(User user) {
+        Address address = user.getAddress();
+        if (address != null) {
+            if (address.getId() != null) {
+                Optional<Address> optionalAddress = addressRepository.findById(address.getId()); // get the address by id
+                if (optionalAddress.isPresent()) { // if address exists
+                    address = optionalAddress.get(); // get the address
+                } else {  // if address does not exist
+                    address = addressRepository.save(address); // save the address
+                }
+            } else { // if address does not exist
+                address = addressRepository.save(address); // save the address
+            }
+            user.setAddress(address);
+        }
+        return userRepository.save(user);
+    } */
 
 
     public User update(User user) {
         return userRepository.save(user);
     }
-
 
     public void delete(User user) {
         userRepository.delete(user);

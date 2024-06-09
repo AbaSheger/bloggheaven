@@ -30,7 +30,7 @@ public class UserController {
 
     @GetMapping("/users/{id}") // admin role
     @PreAuthorize("hasRole('client_ADMIN')")
-    public Optional<User> getUserById(@PathVariable Long id) {
+    public User getUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 

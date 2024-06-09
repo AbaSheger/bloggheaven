@@ -31,7 +31,7 @@ public class PostController {
 
     @GetMapping ("/posts/{id}")
     @PreAuthorize("hasRole('client_USER')")
-    public Optional<Post> getPostById(@PathVariable Long id) {
+    public Post getPostById(@PathVariable Long id) {
         return postService.findById(id);
     }
 
