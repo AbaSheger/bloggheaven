@@ -16,7 +16,7 @@ public class Post {
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
-    @ManyToOne (fetch = FetchType.EAGER) // to fetch the author of the post when the post is fetched
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private User author;
 

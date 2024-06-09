@@ -20,15 +20,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    //client_ADMIN
 
-    @GetMapping("/users") // admin role
+
+    @GetMapping("/users")
     @PreAuthorize("hasRole('client_ADMIN')")
     public List <User> getAllUsers() {
         return userService.findAll();
     }
 
-    @GetMapping("/users/{id}") // admin role
+    @GetMapping("/users/{id}")
     @PreAuthorize("hasRole('client_ADMIN')")
     public User getUserById(@PathVariable Long id) {
         return userService.findById(id);

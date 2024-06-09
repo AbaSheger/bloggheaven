@@ -25,25 +25,22 @@ public final AddressRepository addressRepository;
         this.addressRepository = addressRepository;
     }
 
-    //get all posts
     public List<Post> findAll() {
 
         return postRepository.findAll();
     }
 
-    //get post by id
     public Post findById(Long id) {
 
         return postRepository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with ID: " + id + " not found"));
     }
 
 
-    // Create post with potential new user
     public Post save(Post post) {
         User author = post.getAuthor();
         if (author != null) {
             if (author.getId() != null) {
-                // Existing user, fetch from repository
+
                 Optional<User> optionalUser = userRepository.findById(author.getId());
                 if (optionalUser.isPresent()) {
                     author = optionalUser.get();
@@ -51,7 +48,7 @@ public final AddressRepository addressRepository;
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
                 }
             } else {
-                // New user, handle address by ID if provided
+
                 Address address = author.getAddress();
                 if (address != null && address.getId() != null) {
                     Optional<Address> optionalAddress = addressRepository.findById(address.getId());
@@ -61,7 +58,7 @@ public final AddressRepository addressRepository;
                         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found");
                     }
                 } else if (address != null) {
-                    // New address
+
                     address = addressRepository.save(address);
                 }
                 author.setAddress(address);
@@ -74,8 +71,6 @@ public final AddressRepository addressRepository;
 
 
 
-
-    //update post
     public Post update(Post post) {
        Optional<Post> optionalPost = postRepository.findById(post.getId());
 
@@ -93,7 +88,6 @@ public final AddressRepository addressRepository;
 
     }
 
-    //delete post
     public void delete(Long post) {
 
         if (!postRepository.existsById(post)) {

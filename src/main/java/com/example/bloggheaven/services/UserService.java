@@ -32,7 +32,7 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
-  /*  public User save(User user) {
+   public User save(User user) {
         Address address = user.getAddress();
         if (address != null && address.getId() != null){
             Optional<Address> optionalAddress = addressRepository.findById(address.getId());
@@ -48,47 +48,7 @@ public class UserService {
         user.setAddress(address);
 
         return userRepository.save(user);
-    } */
-
-    public User save(User user) {
-        Address address = user.getAddress();
-
-        if (address != null) {
-            if (address.getId() != null) {
-                // Check if address exists in the repository
-                Address finalAddress = addressRepository.findById(address.getId())
-                        .orElseGet(() -> addressRepository.save(address));
-                user.setAddress(finalAddress);
-            } else {
-                // Save the new address
-                Address savedAddress = addressRepository.save(address);
-                user.setAddress(savedAddress);
-            }
-
-        }
-
-        return userRepository.save(user);
     }
-
-
-  /*  public User save(User user) {
-        Address address = user.getAddress();
-        if (address != null) {
-            if (address.getId() != null) {
-                Optional<Address> optionalAddress = addressRepository.findById(address.getId()); // get the address by id
-                if (optionalAddress.isPresent()) { // if address exists
-                    address = optionalAddress.get(); // get the address
-                } else {  // if address does not exist
-                    address = addressRepository.save(address); // save the address
-                }
-            } else { // if address does not exist
-                address = addressRepository.save(address); // save the address
-            }
-            user.setAddress(address);
-        }
-        return userRepository.save(user);
-    } */
-
 
     public User update(User user) {
         return userRepository.save(user);

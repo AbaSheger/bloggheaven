@@ -21,7 +21,7 @@ public class PostController {
         this.postService = postService;
     }
 
-    //client_USER
+
 
     @GetMapping ("/posts")
     @PreAuthorize("hasRole('client_USER')")

@@ -29,42 +29,37 @@ public class AddressService {
 
     }
 
-    //get all address
 
     public List<Address> findAll() {
         return addressRepository.findAll();
     }
 
 
-    //get address by id
+
 
     public Address findById(Long id) {
         return addressRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
     }
 
 
-    // create address
 
     public Address save(Address address, Long userId) {
-        //fetch user
+
         User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
 
 
-        // set address of the user
         address.setUsers(Arrays.asList(user));
 
         return addressRepository.save(address);
     }
 
 
-    //update address
 
     public Address update(Address address) {
         return addressRepository.save(address);
     }
 
-    //delete address
 
     public void delete(Address address) {
         addressRepository.delete(address);

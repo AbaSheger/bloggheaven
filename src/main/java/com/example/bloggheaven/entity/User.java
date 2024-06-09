@@ -30,12 +30,12 @@ public class User {
     @Column (name = "member_type", nullable = false, length = 100)
     private String  memberType;
 
-    @ManyToOne(fetch = FetchType.EAGER)  // to fetch the address of the user when the user is fetched
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE) // to delete all posts of a user when the user is deleted
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Post> posts;
 

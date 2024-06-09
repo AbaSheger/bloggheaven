@@ -39,10 +39,10 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .anyRequest().authenticated())  // any request must be authenticated
-                .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer  // configure the resource server
-                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter))) // configure the jwt authentication converter
-                .sessionManagement(sessionManagement -> sessionManagement  // configure the session management
+                        .anyRequest().authenticated())
+                .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter)))
+                .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(STATELESS));
 
         return http.build();
