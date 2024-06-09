@@ -5,15 +5,13 @@ import com.example.bloggheaven.Repository.UserRepository;
 import com.example.bloggheaven.entity.Address;
 import com.example.bloggheaven.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class AddressService {
